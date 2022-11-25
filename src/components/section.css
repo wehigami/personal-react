@@ -1,53 +1,60 @@
 :root {
-    --border-color: rgb(39 39 42);
+  --border-color: rgb(39 39 42);
 }
 
 section > div:first-child {
-    display: grid;
-    grid-template-columns: 35% 35% 30%;
-    border-top: 0.5px solid var(--border-color);
-    border-bottom: 0.5px solid var(--border-color);
+  display: grid;
+  grid-template-columns: 35% 35% 30%;
+  border-top: 0.5px solid var(--border-color);
+  border-bottom: 0.5px solid var(--border-color);
 }
 
 section > div:first-child div:last-child {
-    text-align: right;
-    
+  text-align: right;
 }
 
 section > div:first-child > div {
-    border-right: 0.1px solid var(--border-color);
-    padding: 14px;
+  border-right: 0.1px solid var(--border-color);
+  padding: 14px;
 }
 
 section > div:first-child > div:nth-child(2) {
-    padding-left: 5px;
+  padding-left: 5px;
 }
 
 section > div:not(:first-child):not(:last-child) {
-    display: grid;
-    grid-template-columns: 70% 30%;
-    border-bottom: 1px solid var(--border-color);
-
+  display: grid;
+  grid-template-columns: 70% 30%;
+  border-bottom: 1px solid var(--border-color);
 }
 
 section > div:not(:first-child):not(:last-child) > div:first-child {
-    border-right: 0.1px solid var(--border-color);
-
+  border-right: 0.1px solid var(--border-color);
 }
 section > div:not(:first-child):not(:last-child) > div:first-child img {
-    opacity: 50%;
+  opacity: 50%;
+}
 
+section > div:not(:first-child):not(:last-child) > div:nth-child(2) {
+  padding: 28px;
+  font-size: 18px;
 }
 section > div:last-child {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
 
+section > div:last-child > div:last-child {
+  text-align: right;
 }
 
 @media only screen and (max-width: 1220px) {
-    section > div:not(:first-child):not(:last-child) {
-        display: flex;
-        flex-direction: column;
-    }
-    section > div:not(:first-child):not(:last-child) > img {
-        object-fit: contain;
-    }
+  section > div:not(:first-child):not(:last-child) {
+    display: flex;
+    flex-direction: column;
+  }
+  section > div:not(:first-child):not(:last-child) > img {
+    object-fit: contain;
+  }
 }
