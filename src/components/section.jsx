@@ -1,17 +1,22 @@
 import './section.css';
 
 function Section(props) {
-    const isImage = (file) => {
-        console.log(file);
-        return file.includes(".com");
+    const isImage = (content) => {
+        if(typeof content !== 'string') {
+            return;
+        }
+        return content.includes(".com");
     }
+
+    let id = 0;
+
     return(
         <section className="grid-rows-3 text-zinc-400">
             {props.divItems.map((item) => (
-                <div className='' key={props.divItems[item]}>
+                <div key={props.divItems.indexOf(item, 0)}>
                     {item.map((contents) => (
-                        <div key={item[contents]}>
-                            {isImage(contents) ? <img src={contents} alt="test project" /> : <p>{contents}</p>}
+                        <div key={id++}>
+                            {isImage(contents) ? <img src={contents} alt="test project" /> : contents}
                         </div>
                     ))}
                 </div>
@@ -22,9 +27,3 @@ function Section(props) {
 }
 
 export default Section;
-
-/**{divRender.map((item) => (
-                        <div className=''>
-                            {item}
-                        </div>
-                    ))} */

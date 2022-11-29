@@ -70,10 +70,10 @@
     white-space: nowrap;
   }
 
-  header > h1 { 
-    position: absolute;
-    z-index: 1;
+  .magic-div {
     inset: 0;
-    margin-top: 200px;
+    margin-top: 15vh;
     user-select: none;
+    position: absolute;
+    height: 15%;
   }

@@ -53,6 +53,7 @@ section > div:last-child > div:last-child {
   section > div:not(:first-child):not(:last-child) {
     display: flex;
     flex-direction: column;
+    text-align: center;
   }
   section > div:not(:first-child):not(:last-child) > img {
     object-fit: contain;
