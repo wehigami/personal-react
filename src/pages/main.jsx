@@ -2,12 +2,13 @@ import Header from "../components/header";
 import Section from "../components/section";
 
 function MainPage() {
-  const titles = [
-    "Projects",
-    "This is the showcase of all my projects",
-    <a href="/">{'github'}</a>,
-  ];
-  const imgs = ["https://www.linkpicture.com/q/Screenshot_2_253.png"];
+  const projects = [
+    {
+      title: 'This website',
+      description: '',
+      img: 'https://www.linkpicture.com/q/Screenshot_2_253.png'
+    }
+  ]
 
   return (
     <div className="bg-zinc-900 text-zinc-200">
@@ -15,9 +16,9 @@ function MainPage() {
       {/**each one of these props needs to be a list */}
       <Section
         divItems={[
-          titles,
+          ['Projects', projects[0].title, <a href="/">{'github'}</a>],
           [
-            imgs[0],
+            projects[0].img,
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quas omnis possimus nam, commodi nulla provident vero dicta mollitia iure earum quam animi! Corrupti",
           ],
           [<button onClick={() => console.log('btn1')}>{'< previous'}</button>, <button onClick={() => console.log('btn1')}>{'next >'}</button>],
