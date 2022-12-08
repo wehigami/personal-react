@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/header";
 import Section from "../components/section";
+import Footer from "../components/footer";
 import { decNextImage, incNextImage } from "../redux/nextImageSlice";
 
 function MainPage() {
@@ -36,6 +37,7 @@ function MainPage() {
           [<button onClick={() => dispatch(decNextImage(projects.length))}>{'< previous'}</button>, <button onClick={() => dispatch(incNextImage(projects.length))}>{'next >'}</button>],
         ]}
       />
+      <Footer />
     </div>
   );
 }
