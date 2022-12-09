@@ -1,10 +1,20 @@
 $border-color: rgb(39 39 42);
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 50%;
+  }
+}
+
 section {
   > div {
-    border-bottom: 0.5px solid $border-color;
+    border-top: 0.5px solid $border-color;
   }
   //first three divs in the row
+
   > div:first-child {
     display: grid;
     grid-template-columns: 35% 35% 30%;
@@ -29,20 +39,25 @@ section {
   }
 
   //main panels/middle rows
+
   > div:not(:first-child):not(:last-child) {
     display: grid;
     grid-template-columns: 70% 30%;
+    overflow: hidden;
+    height: 650px;
 
     > div:first-child {
       border-right: 0.1px solid $border-color;
 
       img {
         opacity: 50%;
+        animation: fadein 0.35s ease forwards;
       }
     }
 
     > div:nth-child(2) {
       padding: 28px;
+      object-position: center;
       font-size: 18px;
     }
 
@@ -53,11 +68,13 @@ section {
 
       img {
         object-fit: contain;
+        animation: fadein 0.35s ease forwards;
       }
     }
   }
 
   //buttons/last row
+
   > div:last-child {
     $border-padding: 20px;
     padding: 14px;

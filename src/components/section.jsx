@@ -16,7 +16,7 @@ function Section(props) {
                 <div key={props.divItems.indexOf(item, 0)}>
                     {item.map((contents) => (
                         <div key={id++}>
-                            {isImage(contents) ? <img src={contents} alt="test project" /> : contents}
+                            {isImage(contents) ? <img src={contents} alt="project" className='fade-in'/> : contents}
                         </div>
                     ))}
                 </div>
