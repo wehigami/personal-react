@@ -1,5 +1,6 @@
 import './section.scss';
 
+
 function Section(props) {
     const isImage = (content) => {
         if(typeof content !== 'string') {

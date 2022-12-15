@@ -1,0 +1,29 @@
+textarea {
+    resize: none;
+    width: 100%;
+
+}
+
+textarea:focus {
+    outline: none;
+}
+
+
+input {
+    width: 70%;
+}
+
+input:focus {
+    outline: none;
+}
+
+::placeholder {
+    color: red;
+    opacity: 1;
+}
+
+::-webkit-input-placeholder {
+    color: red;
+}
+
+

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../components/header";
-import Section from "../components/section";
-import { decNextImage, incNextImage } from "../redux/nextImageSlice";
+import Header from "../header/header";
+import Section from "./section/section";
+import { decNextImage, incNextImage } from "../../redux/nextImageSlice";
 
 function MainPage() {
   const { image } = useSelector((state) => state.nextImage);

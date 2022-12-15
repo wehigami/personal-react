@@ -1,5 +1,5 @@
 import "./header.scss";
-import video from "../imgs/capon.mp4";
+import video from "../../imgs/capon.mp4";
 
 function Header() {
   return (
