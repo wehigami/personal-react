@@ -1,4 +1,4 @@
-$border-color: rgb(39 39 42);
+@use '../../../styles/colors';
 
 @keyframes fadein {
   from {
@@ -11,17 +11,17 @@ $border-color: rgb(39 39 42);
 
 section {
   > div {
-    border-top: 0.5px solid $border-color;
+    border-top: 0.5px solid colors.$border-color;
   }
   //first three divs in the row
 
   > div:first-child {
     display: grid;
     grid-template-columns: 35% 35% 30%;
-    border-top: 0.5px solid $border-color;
+    border-top: 0.5px solid colors.$border-color;
 
     div {
-      border-right: 0.1px solid $border-color;
+      border-right: 0.1px solid colors.$border-color;
       padding: 14px;
     }
 
@@ -47,7 +47,7 @@ section {
     height: 650px;
 
     > div:first-child {
-      border-right: 0.1px solid $border-color;
+      border-right: 0.1px solid colors.$border-color;
 
       img {
         opacity: 50%;
@@ -87,7 +87,7 @@ section {
 
     div:last-child {
       padding-left: $border-padding;
-      border-left: 1px solid $border-color;
+      border-left: 1px solid colors.$border-color;
     }
   }
 }

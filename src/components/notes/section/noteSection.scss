@@ -1,3 +1,8 @@
+@use '../../../styles/colors';
+
+.grid-section {
+    border-right: solid 1px colors.$border-color;
+}
 textarea {
     resize: none;
     width: 100%;
