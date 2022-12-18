@@ -1,9 +1,9 @@
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addNote } from "../../../redux/addNoteSlice";
 import "./noteSection.scss";
-
-
 
 const boxVariant = {
   visible: { opacity: 1, x: 0 },
@@ -20,17 +20,18 @@ const xVariant = {
   hidden: { opacity: 0, y: 50 },
 };
 
-function NoteSection() {
+function NoteSection(props) {
+  const { notes } = useSelector((state) => state.addNoteToArr);
+  const dispatch = useDispatch();
+
   const control = useAnimation();
   const [ref, inView] = useInView();
-
 
   useEffect(() => {
     if (inView) {
       control.start("visible");
     }
   }, [control, inView]);
-
 
   const categories = [
     {
@@ -39,7 +40,7 @@ function NoteSection() {
         {
           name: "tester",
           contents: "lorem",
-          title: 'ipsusum'
+          title: "ipsusum",
         },
       ],
       active: true,
@@ -50,12 +51,28 @@ function NoteSection() {
         {
           name: "test1",
           contents: "ipsum",
-          title: 'none'
+          title: "none",
         },
       ],
       active: false,
     },
   ];
+
+  const [title, setTitle] = useState(props?.value ?? "");
+  const [content, setContent] = useState(props?.value ?? "");
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleContentChange = (event) => {
+    setContent(event.target.value);
+  };
+
+  const displayNote = (titleToSet, contentToSet) => {
+    setTitle(titleToSet);
+    setContent(contentToSet);
+  };
 
   return (
     <div className="grid grid-cols-5 bg-zinc-900 h-screen overflow-hidden">
@@ -76,10 +93,6 @@ function NoteSection() {
             </p>
           ))}
         </div>
-
-        <button className="border border-zinc-600 rounded-full px-4 py-2 text-2xl w-14 h-14 place-self-end">
-          +
-        </button>
       </div>
 
       <div className="col-span-2 grid-section p-2">
@@ -92,22 +105,23 @@ function NoteSection() {
         >
           My notes
         </motion.h1>
-        {categories.map((category) =>
-          category.notes.map((note) =>
-            category.active ? (
-              <p key={category.name} className="my-4">
-                <button>{note.name}</button>
-              </p>
-            ) : (
-              <></>
-            )
-          )
-        )}
+        <div className="pt-6">
+          {notes.map((note) => (
+            <p key={note.title}>
+              <button onClick={() => displayNote(note.title, note.content)}>
+                {note.title}
+              </button>
+            </p>
+          ))}
+        </div>
       </div>
 
       <div className="col-span-2 grid place-items-center p-2">
-        <button className="border border-zinc-600 px-6 py-1 uppercase place-self-end">
-          Save
+        <button
+          className="border border-zinc-600 px-4 py-1 uppercase place-self-end"
+          onClick={() => dispatch(addNote({ title: title, content: content }))}
+        >
+          +
         </button>
         <motion.form
           action=""
@@ -120,11 +134,14 @@ function NoteSection() {
           <input
             type="text"
             name="title"
-            id="title"
+            value={title}
+            onChange={handleTitleChange}
             className="border-b border-zinc-700 text-center text-3xl p-4"
             placeholder="Title"
           />
           <textarea
+            value={content}
+            onChange={handleContentChange}
             name="note"
             id="note"
             cols="30"
