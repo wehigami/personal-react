@@ -8,13 +8,18 @@ export const noteCategory = createSlice({
         name: "All",
         notes: [],
         active: true,
+        id: Math.random(),
       },
-      { name: "test", notes: [], active: false },
     ],
   },
   reducers: {
     addCategory: (state, action) => {
-      state.categories.push(action.payload);
+      state.categories.push({
+        name: action.payload,
+        notes: [],
+        active: false,
+        id: Math.random(),
+      });
       console.log(action.payload);
     },
     setActiveNote: (state, action) => {
@@ -35,11 +40,24 @@ export const noteCategory = createSlice({
       });
 
       state.categories[index].notes.push(action.payload[1]);
-      console.log(`category: ${action.payload[0]} note: ${action.payload[1].title}`);
+
+      console.log(
+        `category: ${action.payload[0]} note: ${action.payload[1].title}`
+      );
+    },
+    delNote: (state, action) => {
+      const index = state.categories.findIndex((category) => {
+        return category.name === action.payload[0];
+      });
+      const noteIndex = state.categories[index].notes.findIndex((note) => {
+        return note.id === action.payload[1];
+      });
+
+      state.categories[index].notes.splice(noteIndex);
     },
   },
 });
 
 const { actions, reducer } = noteCategory;
-export const { addCategory, setActiveNote, addNote } = actions;
+export const { addCategory, setActiveNote, addNote, delNote } = actions;
 export default reducer;

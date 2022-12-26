@@ -2,11 +2,11 @@ import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { delNote } from "../../../redux/addNoteSlice";
 import {
   addCategory,
   setActiveNote,
   addNote,
+  delNote,
 } from "../../../redux/noteCategorySlice";
 import "./noteSection.scss";
 
@@ -41,6 +41,8 @@ function NoteSection(props) {
 
   const [title, setTitle] = useState(props?.value ?? "");
   const [content, setContent] = useState(props?.value ?? "");
+  const [activeCategory, setActiveCategory] = useState(false);
+  const [activeCategoryText, setActiveCategoryText] = useState(props?.value ?? "");
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -55,19 +57,29 @@ function NoteSection(props) {
     setContent(contentToSet);
   };
 
+  const handleActiveCategory = (bool) => {
+    setActiveCategory(bool);
+  };
+
+  const handleActiveCategoryChange = (event) => {
+    const limit = 16;
+
+    setActiveCategoryText(event.target.value.slice(0, limit))
+  }
+
   const findCategory = (arr) => {
     for (const obj of arr) {
-      if(obj.active) return obj.name;
+      if (obj.active) return obj.name;
     }
-  }
+  };
 
   return (
     <div className="grid grid-cols-5 bg-zinc-900 h-screen overflow-hidden">
       <div className="grid-section col-span-1 p-4 grid grid-rows-10">
-        <div className="text-2xl row-span-6">
+        <div className="text-2xl row-span-6 overflow-scroll">
           {categories.map((category) => (
             <div
-              key={`${category.name}`}
+              key={`${category.id}`}
               className={
                 category.active
                   ? "mt-4 bg-zinc-800 p-2 transition-colors"
@@ -86,6 +98,27 @@ function NoteSection(props) {
               </motion.p>
             </div>
           ))}
+          <button
+            className="mt-12 text-zinc-300"
+            onClick={() => handleActiveCategory(true)}
+          >
+            + Add Category
+          </button>
+          {activeCategory ? (
+            <>
+              <input
+                type="text"
+                name="addCategory"
+                placeholder="Category Name"
+                className="border-b border-zinc-700 p-2 mt-2 text-zinc-300 text-lg"
+                value={activeCategoryText}
+                onChange={handleActiveCategoryChange}
+              />
+              <button className="text-zinc-400" onClick={() => dispatch(addCategory(activeCategoryText))}>+</button>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
 
@@ -102,7 +135,25 @@ function NoteSection(props) {
         <div className="pt-6">
           {categories.map((category) =>
             category.notes.map((note) =>
-              category.active ? <p key={note.id}>{note.title}</p> : <></>
+              category.active ? (
+                <p key={`${note.id}`} className="grid gird-cols-2">
+                  <button
+                    className="justify-self-start"
+                    onClick={() => displayNote(note.title, note.content)}
+                  >
+                    {note.title}
+                  </button>
+                  <button
+                    className="justify-self-end"
+                    onClick={() => dispatch(delNote([category.name, note.id]))}
+                  >
+                    🗑️
+                  </button>
+                  <span className="justify-self-end text-zinc-500">{`${note.date}`}</span>
+                </p>
+              ) : (
+                <></>
+              )
             )
           )}
         </div>
