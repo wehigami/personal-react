@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const nextImageSlice = createSlice({
-    name: 'nextImage',
+    name: 'Next Image',
     initialState: {
         image: 0,
     },
