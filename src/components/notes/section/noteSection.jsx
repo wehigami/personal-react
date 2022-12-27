@@ -70,14 +70,14 @@ function NoteSection(props) {
 
   const findCategory = (arr) => {
     for (const obj of arr) {
-      if (obj.active) return obj.id;
+      if (obj.active) return obj.name;
     }
   };
 
-  const findNote = (arr, id) => {
+  const findNote = (arr, title) => {
     for (const obj of arr) {
       for(const note of obj.notes) {
-        if (id === note.id) {
+        if (title === note.title) {
           console.log(`found the note ${note.title}`);
         }
       }
@@ -90,7 +90,7 @@ function NoteSection(props) {
         <div className="text-2xl row-span-6 overflow-scroll">
           {categories.map((category) => (
             <div
-              key={`${category.id}`}
+              key={`${category.name}`}
               className={
                 category.active
                   ? "mt-4 bg-zinc-800 p-2 transition-colors"
@@ -103,7 +103,7 @@ function NoteSection(props) {
               }}
             >
               <p
-                key={`${category.id}`}
+                key={`${category.name}`}
                 className={category.active ? "bg-zinc-800" : ""}
               >
                 {category.name}
@@ -156,7 +156,7 @@ function NoteSection(props) {
           {categories.map((category) =>
             category.notes.map((note) =>
               category.active ? (
-                <p key={`${note.id}`} className="grid gird-cols-2">
+                <p key={`${note.title}`} className="grid gird-cols-2">
                   <button
                     className="justify-self-start"
                     onClick={() => displayNote(note.title, note.content)}
@@ -166,8 +166,8 @@ function NoteSection(props) {
                   <button
                     className="justify-self-end"
                     onClick={() => {
-                      dispatch(delNote([findCategory(categories), note.id]))
-                      findNote(categories, note.id);
+                      dispatch(delNote([findCategory(categories), note.title]))
+                      findNote(categories, note.title);
                     }}
                   >
                     🗑️
@@ -194,7 +194,6 @@ function NoteSection(props) {
                   title: title,
                   content: content,
                   date: Date().toString().slice(0, 10).replace(/-/g, "/"),
-                  id: Math.random(),
                 },
               ])
             );
