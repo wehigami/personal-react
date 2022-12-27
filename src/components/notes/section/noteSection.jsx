@@ -26,8 +26,7 @@ const formVariant = {
 };
 
 function NoteSection(props) {
-  const { notes } = useSelector((state) => state.addNoteToArr);
-  const { categories } = useSelector((state) => state.noteCategory);
+  const { categories, errorMessage } = useSelector((state) => state.noteCategory);
   const dispatch = useDispatch();
 
   const control = useAnimation();
@@ -42,7 +41,9 @@ function NoteSection(props) {
   const [title, setTitle] = useState(props?.value ?? "");
   const [content, setContent] = useState(props?.value ?? "");
   const [activeCategory, setActiveCategory] = useState(false);
-  const [activeCategoryText, setActiveCategoryText] = useState(props?.value ?? "");
+  const [activeCategoryText, setActiveCategoryText] = useState(
+    props?.value ?? ""
+  );
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -64,14 +65,24 @@ function NoteSection(props) {
   const handleActiveCategoryChange = (event) => {
     const limit = 16;
 
-    setActiveCategoryText(event.target.value.slice(0, limit))
-  }
+    setActiveCategoryText(event.target.value.slice(0, limit));
+  };
 
   const findCategory = (arr) => {
     for (const obj of arr) {
-      if (obj.active) return obj.name;
+      if (obj.active) return obj.id;
     }
   };
+
+  const findNote = (arr, id) => {
+    for (const obj of arr) {
+      for(const note of obj.notes) {
+        if (id === note.id) {
+          console.log(`found the note ${note.title}`);
+        }
+      }
+    }
+  }
 
   return (
     <div className="grid grid-cols-5 bg-zinc-900 h-screen overflow-hidden">
@@ -85,17 +96,18 @@ function NoteSection(props) {
                   ? "mt-4 bg-zinc-800 p-2 transition-colors"
                   : "mt-4 p-2"
               }
-              onClick={() => dispatch(setActiveNote(category.name))}
+              onClick={() => {
+                dispatch(setActiveNote(category.name))
+                setTitle('');
+                setContent('');
+              }}
             >
-              <motion.p
-                variants={categoryVariant}
-                ref={ref}
-                initial="hidden"
-                animate={control}
+              <p
+                key={`${category.id}`}
                 className={category.active ? "bg-zinc-800" : ""}
               >
                 {category.name}
-              </motion.p>
+              </p>
             </div>
           ))}
           <button
@@ -114,7 +126,15 @@ function NoteSection(props) {
                 value={activeCategoryText}
                 onChange={handleActiveCategoryChange}
               />
-              <button className="text-zinc-400" onClick={() => dispatch(addCategory(activeCategoryText))}>+</button>
+              <button
+                className="text-zinc-400"
+                onClick={() => {
+                  dispatch(addCategory(activeCategoryText));
+                  handleActiveCategory(false);
+                }}
+              >
+                +
+              </button>
             </>
           ) : (
             <></>
@@ -145,7 +165,10 @@ function NoteSection(props) {
                   </button>
                   <button
                     className="justify-self-end"
-                    onClick={() => dispatch(delNote([category.name, note.id]))}
+                    onClick={() => {
+                      dispatch(delNote([findCategory(categories), note.id]))
+                      findNote(categories, note.id);
+                    }}
                   >
                     🗑️
                   </button>
@@ -156,6 +179,7 @@ function NoteSection(props) {
               )
             )
           )}
+          {errorMessage ? <p>Sorry, you can't add a note with the same name!</p> : <></>}
         </div>
       </div>
 
