@@ -26,7 +26,9 @@ const formVariant = {
 };
 
 function NoteSection(props) {
-  const { categories, errorMessage } = useSelector((state) => state.noteCategory);
+  const { categories, errorMessage } = useSelector(
+    (state) => state.noteCategory
+  );
   const dispatch = useDispatch();
 
   const control = useAnimation();
@@ -76,13 +78,19 @@ function NoteSection(props) {
 
   const findNote = (arr, title) => {
     for (const obj of arr) {
-      for(const note of obj.notes) {
+      for (const note of obj.notes) {
         if (title === note.title) {
           console.log(`found the note ${note.title}`);
         }
       }
     }
-  }
+  };
+
+  const handleEnterPress = (event, ...functions) => {
+    if (event.key == "Enter") {
+      return functions;
+    }
+  };
 
   return (
     <div className="grid grid-cols-5 bg-zinc-900 h-screen overflow-hidden">
@@ -97,9 +105,9 @@ function NoteSection(props) {
                   : "mt-4 p-2"
               }
               onClick={() => {
-                dispatch(setActiveNote(category.name))
-                setTitle('');
-                setContent('');
+                dispatch(setActiveNote(category.name));
+                setTitle("");
+                setContent("");
               }}
             >
               <p
@@ -132,6 +140,7 @@ function NoteSection(props) {
                   dispatch(addCategory(activeCategoryText));
                   handleActiveCategory(false);
                 }}
+
               >
                 +
               </button>
@@ -166,7 +175,7 @@ function NoteSection(props) {
                   <button
                     className="justify-self-end"
                     onClick={() => {
-                      dispatch(delNote([findCategory(categories), note.title]))
+                      dispatch(delNote([findCategory(categories), note.title]));
                       findNote(categories, note.title);
                     }}
                   >
@@ -179,7 +188,11 @@ function NoteSection(props) {
               )
             )
           )}
-          {errorMessage ? <p>Sorry, you can't add a note with the same name!</p> : <></>}
+          {errorMessage ? (
+            <p>Sorry, you can't add a note with the same name!</p>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
 

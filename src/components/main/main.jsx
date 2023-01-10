@@ -2,9 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../header/header";
 import Section from "./section/section";
 import { decNextImage, incNextImage } from "../../redux/nextImageSlice";
+import LoginPopup from "../nav/loginNav/loginPopup";
 
 function MainPage() {
+
   const { image } = useSelector((state) => state.nextImage);
+  const { active } = useSelector((state) => state.loginActive);
   const dispatch = useDispatch();
   const github = "https://github.com/wehigami";
   const projects = [
@@ -17,44 +20,49 @@ function MainPage() {
     },
     {
       title: "Scandiweb entry project",
-      description: "This is the entry project for Scandiweb - a test of your abilities as a programmer. It was made using React, ReduxTK, graphQL and Apollo. I'm very proud and happy with this one - it was a lot of fun! (also it's not resposinve)",
+      description:
+        "This is the entry project for Scandiweb - a test of your abilities as a programmer. It was made using React, ReduxTK, graphQL and Apollo. I'm very proud and happy with this one - it was a lot of fun! (also it's not resposinve)",
       img: "https://i.imgur.com/wpKDyRw.png",
       github: "https://github.com/wehigami/scandiweb-job-test",
     },
   ];
 
   return (
-    <div className="bg-zinc-900 text-zinc-200 grid auto-rows-auto">
-      <Header />
-      {/**each one of these props needs to be a list */}
-      <Section
-        divItems={[
-          [
-            "Projects",
-            projects[image].title,
-            <a
-              href={
-                projects[image].github.length > 0
-                  ? projects[image].github
-                  : github
-              }
-              target="_blank"
-              rel="noreferrer"
-            >
-              {"github"}
-            </a>,
-          ],
-          [projects[image].img, projects[image].description],
-          [
-            <button onClick={() => dispatch(decNextImage(projects.length))}>
-              {"< previous"}
-            </button>,
-            <button onClick={() => dispatch(incNextImage(projects.length))}>
-              {"next >"}
-            </button>,
-          ],
-        ]}
-      />
+    <div className="bg-zinc-900 text-zinc-200 flex flex-col justify-center items-center">
+      <LoginPopup className="" />
+      <div className={active ? "opacity-50" : ""}>
+        <Header />
+        {/**each one of these props needs to be a list */}
+
+        <Section
+          divItems={[
+            [
+              "Projects",
+              projects[image].title,
+              <a
+                href={
+                  projects[image].github.length > 0
+                    ? projects[image].github
+                    : github
+                }
+                target="_blank"
+                rel="noreferrer"
+              >
+                {"github"}
+              </a>,
+            ],
+            [projects[image].img, projects[image].description],
+            [
+              <button onClick={() => dispatch(decNextImage(projects.length))}>
+                {"< previous"}
+              </button>,
+              <button onClick={() => dispatch(incNextImage(projects.length))}>
+                {"next >"}
+              </button>,
+            ],
+          ]}
+        />
+      </div>
     </div>
   );
 }
