@@ -60,7 +60,7 @@ function LoginPopup() {
     >
       <h1 className="text-xl mt-6">Log in</h1>
       <div className="googleLogin">
-      <p className="border-b w-64 pb-2 text-center mt-16 mb-24 border-zinc-600">For now:</p>
+      <p className="border-b w-72 pb-2 text-center mt-16 mb-24 border-zinc-600">This is the only option (For now):</p>
       </div>
       <div className="googleLogin">
         <GoogleLogin
