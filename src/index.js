@@ -7,6 +7,7 @@ import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import Notes from './pages/notes-app';
 
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
